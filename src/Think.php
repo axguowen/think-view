@@ -38,7 +38,7 @@ class Think
         'tpl_cache'     => true,
     ];
 
-    public function __construct(App $app, $config = [])
+    public function __construct(App $app, array $config = [])
     {
         $this->app = $app;
 
@@ -50,7 +50,7 @@ class Think
 
         $this->template = new Template($this->config);
         $this->template->setCache($app->cache);
-        $this->template->extend('$Think', function ($vars) {
+        $this->template->extend('$Think', function (array $vars) {
             $type  = strtoupper(trim(array_shift($vars)));
             $param = implode('.', $vars);
 
@@ -80,7 +80,7 @@ class Think
             return $parseStr;
         });
 
-        $this->template->extend('$Request', function ($vars) {
+        $this->template->extend('$Request', function (array $vars) {
             // 获取Request请求对象参数
             $method = array_shift($vars);
             if (!empty($vars)) {
@@ -119,7 +119,7 @@ class Think
      * @param  array  $data 模板变量
      * @return void
      */
-    public function fetch($template, $data = [])
+    public function fetch($template, array $data = [])
     {
         if (empty($this->config['view_path'])) {
             $view = $this->config['view_dir_name'];
@@ -155,7 +155,7 @@ class Think
      * @param  array  $data 模板变量
      * @return void
      */
-    public function display($template, $data = [])
+    public function display($template, array $data = [])
     {
         $this->template->display($template, $data);
     }
@@ -234,7 +234,7 @@ class Think
      * @param  array  $config 参数
      * @return void
      */
-    public function config($config)
+    public function config(array $config)
     {
         $this->template->config($config);
         $this->config = array_merge($this->config, $config);
